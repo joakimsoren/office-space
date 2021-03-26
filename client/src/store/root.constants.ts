@@ -10,6 +10,8 @@ export const state: IRootState = {
 export enum ERootAction {
   SetEmail = "setEmail",
   LoadQueues = "loadQueues",
+  TakePlace = "takePlace",
+  RemovePlace = "removePlace",
 }
 
 export enum ERootMutation {

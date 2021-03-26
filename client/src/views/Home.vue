@@ -43,7 +43,6 @@ export default class Home extends Vue {
 }
 </script>
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Ranchers&family=Zilla+Slab:wght@300&display=swap");
 .home {
   height: 100%;
   max-width: 1000px;

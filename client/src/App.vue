@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <transition name="fade" mode="out-in">
+      <router-view />
+    </transition>
   </div>
 </template>
 
@@ -15,6 +17,7 @@ body {
 }
 
 #app {
+  @import url("https://fonts.googleapis.com/css2?family=Ranchers&family=Zilla+Slab:wght@300&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap");
   font-family: "Zilla Slab", serif;
   -webkit-font-smoothing: antialiased;
@@ -58,6 +61,19 @@ button {
   }
   &:focus {
     outline: none;
+  }
+  &.secondary {
+    background-color: white;
+    color: darken(#2e503c, 10%);
+    &:hover:enabled {
+      color: white;
+    }
+    &:active:enabled {
+      color: white;
+    }
+  }
+  &.small {
+    font-size: 20px;
   }
 }
 </style>

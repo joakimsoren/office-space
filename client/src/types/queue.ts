@@ -1,5 +1,7 @@
+import { EWeekday } from "./weekday";
+
 export interface IQueue {
-  weekday: string;
+  weekday: EWeekday;
   attendees: string[];
   limit: number;
 }
