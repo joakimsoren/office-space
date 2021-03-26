@@ -4,9 +4,8 @@
       <div class="jumbo">Office Space</div>
     </div>
     <div class="input-email-container">
-      <label for="input-email">Enter your email</label>
       <br />
-      <input id="input-email" v-model="email" />
+      <input id="input-email" v-model="email" placeholder="Gief email plz..." />
       <br />
       <button :disabled="disabled" @click="handleProceed(email)">
         Proceed {{ emailSaved }}
@@ -47,6 +46,8 @@ export default class Home extends Vue {
 @import url("https://fonts.googleapis.com/css2?family=Ranchers&family=Zilla+Slab:wght@300&display=swap");
 .home {
   height: 100%;
+  max-width: 1000px;
+  margin: auto;
   .jumbo-container {
     padding: 5px;
     .jumbo {
@@ -68,12 +69,9 @@ export default class Home extends Vue {
   }
   .input-email-container {
     margin-top: 10%;
-    label {
-      font-size: 20px;
-      font-weight: 600;
-    }
     #input-email {
       margin: 20px;
+      margin-top: 5%;
       width: 50%;
       border: solid 2px #2e503c;
       border-radius: 2px;
@@ -91,12 +89,15 @@ export default class Home extends Vue {
       color: white;
       font-weight: bold;
       font-size: 30px;
-      cursor: pointer;
-      &:hover {
+      &:hover:enabled {
         background-color: lighten(#2e503c, 10%);
       }
-      &:active {
+      &:active:enabled {
         background-color: darken(#2e503c, 5%);
+      }
+      &:disabled {
+        opacity: 0.7;
+        cursor: default;
       }
     }
   }

@@ -46,11 +46,18 @@ button {
   font-weight: bold;
   font-size: 30px;
   cursor: pointer;
-  &:hover {
+  &:hover:enabled {
     background-color: lighten(#2e503c, 10%);
   }
-  &:active {
+  &:active:enabled {
     background-color: darken(#2e503c, 5%);
+  }
+  &:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
+  &:focus {
+    outline: none;
   }
 }
 </style>

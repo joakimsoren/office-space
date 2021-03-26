@@ -3,13 +3,15 @@
     <template v-if="!loaded || loading"> Loading... </template>
     <template v-else-if="empty"> No queues </template>
     <template v-else>
-      <h1>Hello, {{ email }}</h1>
-      <h2>Book your spot</h2>
+      <h1>Hello, {{ email }}!</h1>
+      <h2>Book your spot below</h2>
       <div class="book">
         <Queue v-for="(queue, index) of queues" :key="index" :queue="queue" />
       </div>
-      <h2>Not {{ email }}?</h2>
-      <button @click="handleSignOut">Sign out</button>
+      <div class="logout">
+        <h2>Not {{ email }}?</h2>
+        <button @click="handleSignOut">Sign out</button>
+      </div>
     </template>
   </div>
 </template>
@@ -52,10 +54,12 @@ export default class Book extends Vue {
   flex-direction: column;
   justify-content: center;
   .book {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: 1;
   }
+}
+button {
+  width: auto;
 }
 </style>
