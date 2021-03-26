@@ -24,17 +24,17 @@ services:
     volumes:
       - ./src/:/app/src
     command: npm run start
-  #   depends_on:
-  #     - localstack
+    depends_on:
+      - localstack
 
 
 
-  # localstack:
-  #   image: localstack/localstack:0.11.5
-  #   volumes:
-  #     - ./initaws:/docker-entrypoint-initaws.d
-  #   environment:
-  #     - SERVICES=dynamodb
-  #     - AWS_DEFAULT_REGION=us-west-2
-  #     - START_WEB=0
-  #     - DEBUG=1
+  localstack:
+    image: localstack/localstack:0.11.5
+    volumes:
+      - ./initaws:/docker-entrypoint-initaws.d
+    environment:
+      - SERVICES=dynamodb
+      - AWS_DEFAULT_REGION=us-west-2
+      - START_WEB=0
+      - DEBUG=1
