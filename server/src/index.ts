@@ -4,6 +4,17 @@ var cors = require("cors");
 var bodyParser = require("body-parser");
 
 const app = express();
+
+const http = require("http").Server(
+  app
+);
+
+const io = require("socket.io")(http);
+
+io.on("connection", (_socket: any) => {
+  console.log("a user connected");
+});
+
 app.use(cors());
 
 // parse various different custom JSON types as JSON
