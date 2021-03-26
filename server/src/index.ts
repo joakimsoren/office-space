@@ -28,8 +28,8 @@ const port = 3000;
 
 app.use("/queues", QueueController);
 
-app.listen(port, () => {
+http.listen(port, () => {
   console.log(
-    `Example app listening at http://localhost:${port}`
+    `Server listening: http://localhost:${port}`
   );
 });
