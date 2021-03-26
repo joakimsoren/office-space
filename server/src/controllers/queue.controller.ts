@@ -1,3 +1,4 @@
+import { DeleteQueuesBody } from "../interfaces/delete-queues-body.interface";
 import { PostQueuesBody } from "../interfaces/post-queues-body.interface";
 import { Queue } from "../interfaces/queue.interface";
 // import { queues as queuesMock } from "../mocks/queues";
@@ -16,26 +17,46 @@ router.get(
 );
 
 router.post(
-  "/",
+  "/attendees",
   async (req: any, res: any) => {
     const {
       weekday,
       email,
     }: PostQueuesBody = req.body;
     try {
-      await service.addToQueue(
+      const queues: Queue[] = await service.addToQueue(
         weekday,
         email
       );
+
+      res.send(queues);
     } catch (error) {
       res.send({
         error: error.message,
       });
     }
+  }
+);
 
-    res.send({
-      status: "WIP (Work in progress)",
-    });
+router.delete(
+  "/attendees",
+  async (req: any, res: any) => {
+    const {
+      weekday,
+      email,
+    }: DeleteQueuesBody = req.body;
+    try {
+      const queues: Queue[] = await service.removeFromQueue(
+        weekday,
+        email
+      );
+
+      res.send(queues);
+    } catch (error) {
+      res.send({
+        error: error.message,
+      });
+    }
   }
 );
 

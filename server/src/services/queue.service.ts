@@ -18,11 +18,20 @@ export class QueueService {
   async addToQueue(
     weekDay: Weekday,
     email: string
-  ): Promise<boolean> {
-    await this.dynamoService.addToQueue(
+  ): Promise<Queue[]> {
+    return this.dynamoService.addToQueue(
       weekDay,
       email
     );
-    return true;
+  }
+
+  async removeFromQueue(
+    weekday: Weekday,
+    email: string
+  ): Promise<Queue[]> {
+    return this.dynamoService.removeFromQueue(
+      weekday,
+      email
+    );
   }
 }

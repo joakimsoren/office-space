@@ -48,7 +48,7 @@ export class DynamoDBService {
   async addToQueue(
     weekday: Weekday,
     email: string
-  ): Promise<boolean> {
+  ): Promise<Queue[]> {
     const {
       attendees,
     }: Queue = await this.getQueue(
@@ -71,7 +71,30 @@ export class DynamoDBService {
       newAttendees
     );
 
-    return true;
+    return this.getQueues();
+  }
+
+  async removeFromQueue(
+    weekday: Weekday,
+    email: string
+  ): Promise<Queue[]> {
+    const {
+      attendees,
+    }: Queue = await this.getQueue(
+      weekday
+    );
+
+    const newAttendees = attendees.filter(
+      (attendee: string) =>
+        attendee !== email
+    );
+
+    await this.updateQueue(
+      weekday,
+      newAttendees
+    );
+
+    return this.getQueues();
   }
 
   private async updateQueue(
