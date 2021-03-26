@@ -39,14 +39,4 @@ export const queues: Queue[] = [
     ],
     limit: 5,
   },
-  {
-    weekday: Weekday.Saturday,
-    attendees: [],
-    limit: 5,
-  },
-  {
-    weekday: Weekday.Sunday,
-    attendees: [],
-    limit: 5,
-  },
 ];
