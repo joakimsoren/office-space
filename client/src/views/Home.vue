@@ -33,5 +33,11 @@ export default class Home extends Vue {
     this.actionSetEmail(email);
     this.$router.push("/book");
   }
+
+  mounted() {
+    if (this.emailSaved) {
+      this.$router.push("/book");
+    }
+  }
 }
 </script>

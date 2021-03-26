@@ -16,6 +16,14 @@ const handleEnterBooking = async (to: Route, from: Route, next: any) => {
 const routes: Array<RouteConfig> = [
   {
     path: "/",
+    redirect: "/home",
+  },
+  {
+    path: "*",
+    redirect: "/home",
+  },
+  {
+    path: "/home",
     name: "Home",
     component: Home,
   },

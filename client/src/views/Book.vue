@@ -25,7 +25,7 @@ export default class Book extends Vue {
 
   handleSignOut() {
     this.actionSetEmail("");
-    this.$router.push("/");
+    this.$router.push("/home");
   }
 
   queues: IQueue[] = [
