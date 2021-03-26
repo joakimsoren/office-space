@@ -10,7 +10,6 @@ export const queues: Queue[] = [
       "mweique135k@mobv.site",
       "qfazymasoo@alamergaex.tk",
       "osemuab@darwinav.com",
-      "eibra-acmh@antonija.com",
     ],
     limit: 5,
   },

@@ -28,6 +28,7 @@ export default class Queue extends Vue {
   @Prop() queue: IQueue;
 
   get attendees(): string[] {
+    console.log(this.queue);
     return this.queue?.attendees || [];
   }
 

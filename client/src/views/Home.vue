@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Office Space</h1>
+    <div class="jumbo">Office Space</div>
     <div class="input-email-container">
       <label for="input-email">Enter your email</label>
       <br />
@@ -41,3 +41,18 @@ export default class Home extends Vue {
   }
 }
 </script>
+<style lang="scss" scoped>
+@import url("https://fonts.googleapis.com/css2?family=Ranchers&family=Zilla+Slab:wght@300&display=swap");
+.home {
+  height: 100%;
+  .jumbo {
+    width: 100%;
+    font-size: 20px;
+    color: white;
+    background-color: blue;
+    height: 30%;
+    font-family: "Ranchers", cursive;
+    font-family: "Zilla Slab", serif;
+  }
+}
+</style>

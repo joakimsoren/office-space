@@ -1,12 +1,16 @@
 <template>
   <div class="book-container">
-    <h1>Hello, {{ email }}</h1>
-    <h2>Book your spot</h2>
-    <div class="book">
-      <Queue v-for="(queue, index) of queues" :key="index" :queue="queue" />
-    </div>
-    <h2>Not {{ email }}?</h2>
-    <button @click="handleSignOut">Sign out</button>
+    <template v-if="!loaded || loading"> Loading... </template>
+    <template v-else-if="empty"> No queues </template>
+    <template v-else>
+      <h1>Hello, {{ email }}</h1>
+      <h2>Book your spot</h2>
+      <div class="book">
+        <Queue v-for="(queue, index) of queues" :key="index" :queue="queue" />
+      </div>
+      <h2>Not {{ email }}?</h2>
+      <button @click="handleSignOut">Sign out</button>
+    </template>
   </div>
 </template>
 <script lang="ts">
@@ -21,45 +25,25 @@ import { ERootAction } from "@/store/root.constants";
 })
 export default class Book extends Vue {
   @State("email") email: string;
+  @State("queues") queues: IQueue[];
+  @State("loading") loading: boolean;
+  @State("loaded") loaded: boolean;
+
   @Action(ERootAction.SetEmail) actionSetEmail: any;
+  @Action(ERootAction.LoadQueues) actionLoadQueues: any;
+
+  get empty() {
+    return this.loaded && !this.queues.length;
+  }
 
   handleSignOut() {
     this.actionSetEmail("");
     this.$router.push("/home");
   }
 
-  queues: IQueue[] = [
-    {
-      weekday: "monday",
-      attendees: ["sven@hotmail.com", "larsson@hotmail.com", "etc.hotmail.com"],
-      limit: 10,
-    },
-    {
-      weekday: "tuesday",
-      attendees: [
-        "tilda@hotmail.com",
-        "svensson@hotmail.com",
-        "hej@hotmail.com",
-        "hejsan@hotamil.com",
-      ],
-      limit: 10,
-    },
-    {
-      weekday: "wednesday",
-      attendees: ["sven@hotmail.com", "larsson@hotmail.com", "etc.hotmail.com"],
-      limit: 10,
-    },
-    {
-      weekday: "thursday",
-      attendees: ["sven@hotmail.com", "larsson@hotmail.com", "etc.hotmail.com"],
-      limit: 10,
-    },
-    {
-      weekday: "friday",
-      attendees: ["sven@hotmail.com", "larsson@hotmail.com", "etc.hotmail.com"],
-      limit: 10,
-    },
-  ];
+  mounted() {
+    this.actionLoadQueues();
+  }
 }
 </script>
 <style lang="scss">
