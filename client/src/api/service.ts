@@ -4,10 +4,15 @@ import { ITakePlace } from "@/types/take-place";
 export class Service {
   static path = "http://localhost:3000/";
 
-  static fetchQueues(): Promise<IQueue[]> {
-    return fetch(`${Service.path}queues`)
+  static fetchQueues(
+    email: string
+  ): Promise<{ queues: IQueue[]; bookingsLeft: number }> {
+    return fetch(`${Service.path}queues?email${email}`)
       .then((response) => response.json())
-      .then((responseJSON) => responseJSON as IQueue[]);
+      .then(
+        (responseJSON) =>
+          responseJSON as { queues: IQueue[]; bookingsLeft: number }
+      );
   }
 
   static takePlace(

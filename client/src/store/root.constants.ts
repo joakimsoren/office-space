@@ -5,7 +5,7 @@ export const state: IRootState = {
   queues: [],
   loading: false,
   loaded: false,
-  bookingsLeft: 0,
+  bookingsLeft: 2,
 };
 
 export enum ERootAction {

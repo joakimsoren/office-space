@@ -5,7 +5,10 @@
     <template v-else>
       <div>
         <h1>Hello, {{ email }}!</h1>
-        <h2>Book your spot below</h2>
+        <h2 v-if="bookingsLeft > 0">
+          Book your spot below, {{ bookingsLeft }} spots left
+        </h2>
+        <h2 v-else>No more spots left for you, mate</h2>
       </div>
       <div class="book">
         <Queue
@@ -54,12 +57,12 @@ export default class Book extends Vue {
     return queue.attendees.some((attendee: string) => attendee === this.email);
   }
 
-  handleSignOut() {
+  handleSignOut(): void {
     this.actionSetEmail("");
     this.$router.push("/home");
   }
 
-  mounted() {
+  mounted(): void {
     this.actionLoadQueues();
   }
 }

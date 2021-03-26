@@ -33,11 +33,12 @@ export const actions: ActionTree<IRootState, any> = {
       console.error("Could not remove place", e);
     }
   },
-  async [ERootAction.LoadQueues]({ commit }) {
+  async [ERootAction.LoadQueues]({ commit, state }) {
     commit(ERootMutation.SetLoaded, false);
     commit(ERootMutation.SetLoading, true);
     try {
-      const queues: IQueue[] = await Service.fetchQueues();
+      const { queues, bookingsLeft } = await Service.fetchQueues(state.email);
+      commit(ERootMutation.SetBookingsLeft, bookingsLeft);
       commit(ERootMutation.SetQueues, queues);
       commit(ERootMutation.SetLoaded, true);
       commit(ERootMutation.SetLoading, false);
