@@ -4,12 +4,37 @@ x-build: &base-build
   context: .
   dockerfile: ./Dockerfile
 
+x-env: &base-env
+  ENVIRONMENT: dev
+  PORT: 80
+  AWS_REGION: us-west-2
+  AWS_ACCESS_KEY_ID: AKID
+  AWS_SECRET_ACCESS_KEY: SECRET
+  LOCALSTACK_ENDPOINT: http://localstack:4566
+  API_VERSION: v1
+  API_SERVER: localhost:5000
+
 services:
   server:
     build: *base-build
+    environment: *base-env
     ports:
       - 3000:3000
       - 3001:3001
     volumes:
       - ./src/:/app/src
     command: npm run start
+  #   depends_on:
+  #     - localstack
+
+
+
+  # localstack:
+  #   image: localstack/localstack:0.11.5
+  #   volumes:
+  #     - ./initaws:/docker-entrypoint-initaws.d
+  #   environment:
+  #     - SERVICES=dynamodb
+  #     - AWS_DEFAULT_REGION=us-west-2
+  #     - START_WEB=0
+  #     - DEBUG=1

@@ -1,10 +1,10 @@
+const QueueController = require("./controllers/queue.controller");
+
 const express = require("express");
 const app = express();
 const port = 3000;
 
-app.get("/", (_req: any, res: any) => {
-  res.send("Hello World!");
-});
+app.use("/queues", QueueController);
 
 app.listen(port, () => {
   console.log(
