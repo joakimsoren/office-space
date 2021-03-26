@@ -5,6 +5,7 @@ export const state: IRootState = {
   queues: [],
   loading: false,
   loaded: false,
+  bookingsLeft: 0,
 };
 
 export enum ERootAction {
@@ -12,6 +13,7 @@ export enum ERootAction {
   LoadQueues = "loadQueues",
   TakePlace = "takePlace",
   RemovePlace = "removePlace",
+  Logout = "logout",
 }
 
 export enum ERootMutation {
@@ -19,4 +21,6 @@ export enum ERootMutation {
   SetQueues = "setQueues",
   SetLoading = "setLoading",
   SetLoaded = "setLoaded",
+  SetState = "setState",
+  SetBookingsLeft = "setBookingsLeft",
 }

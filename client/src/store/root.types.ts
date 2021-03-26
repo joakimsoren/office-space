@@ -5,4 +5,5 @@ export interface IRootState {
   queues: IQueue[];
   loading: boolean;
   loaded: boolean;
+  bookingsLeft: number;
 }

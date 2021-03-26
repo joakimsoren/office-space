@@ -3,10 +3,18 @@
     <template v-if="!loaded || loading"> Loading... </template>
     <template v-else-if="empty"> No queues </template>
     <template v-else>
-      <h1>Hello, {{ email }}!</h1>
-      <h2>Book your spot below</h2>
+      <div>
+        <h1>Hello, {{ email }}!</h1>
+        <h2>Book your spot below</h2>
+      </div>
       <div class="book">
-        <Queue v-for="(queue, index) of queues" :key="index" :queue="queue" />
+        <Queue
+          v-for="(queue, index) of queues"
+          :key="index"
+          :queue="queue"
+          :booked="booked(queue)"
+          :no-more-bookings="bookingsLeft === 0"
+        />
       </div>
       <div class="logout">
         <h2>Not {{ email }}?</h2>
@@ -30,12 +38,20 @@ export default class Book extends Vue {
   @State("queues") queues: IQueue[];
   @State("loading") loading: boolean;
   @State("loaded") loaded: boolean;
+  @State("bookingsLeft") bookingsLeft: number;
 
   @Action(ERootAction.SetEmail) actionSetEmail: any;
   @Action(ERootAction.LoadQueues) actionLoadQueues: any;
 
-  get empty() {
+  get empty(): boolean {
     return this.loaded && !this.queues.length;
+  }
+
+  booked(queue: IQueue): boolean {
+    if (!queue.attendees.length) {
+      return false;
+    }
+    return queue.attendees.some((attendee: string) => attendee === this.email);
   }
 
   handleSignOut() {
@@ -52,7 +68,8 @@ export default class Book extends Vue {
 .book-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  height: 100%;
   .book {
     display: grid;
     grid-template-columns: repeat(5, 20%);

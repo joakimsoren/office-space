@@ -16,4 +16,7 @@ export const mutations: MutationTree<IRootState> = {
   [ERootMutation.SetLoaded](state: IRootState, loaded: boolean) {
     state.loaded = loaded;
   },
+  [ERootMutation.SetBookingsLeft](state: IRootState, bookingsLeft: number) {
+    state.bookingsLeft = bookingsLeft;
+  },
 };

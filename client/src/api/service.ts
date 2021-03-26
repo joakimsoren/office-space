@@ -10,21 +10,37 @@ export class Service {
       .then((responseJSON) => responseJSON as IQueue[]);
   }
 
-  static takePlace(body: ITakePlace): Promise<IQueue[]> {
+  static takePlace(
+    body: ITakePlace
+  ): Promise<{ queues: IQueue[]; bookingsLeft: number }> {
     return fetch(`${Service.path}queues/attendees`, {
       method: "POST",
       body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
-      .then((responseJSON) => responseJSON as IQueue[]);
+      .then(
+        (responseJSON) =>
+          responseJSON as { queues: IQueue[]; bookingsLeft: number }
+      );
   }
 
-  static removePlace(body: ITakePlace): Promise<IQueue[]> {
+  static removePlace(
+    body: ITakePlace
+  ): Promise<{ queues: IQueue[]; bookingsLeft: number }> {
     return fetch(`${Service.path}queues/attendees`, {
       method: "DELETE",
       body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
-      .then((responseJSON) => responseJSON as IQueue[]);
+      .then(
+        (responseJSON) =>
+          responseJSON as { queues: IQueue[]; bookingsLeft: number }
+      );
   }
 }

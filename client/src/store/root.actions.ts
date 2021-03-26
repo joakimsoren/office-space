@@ -11,10 +11,11 @@ export const actions: ActionTree<IRootState, any> = {
   },
   async [ERootAction.TakePlace]({ commit, state }, weekday: EWeekday) {
     try {
-      const queues: IQueue[] = await Service.takePlace({
+      const { queues, bookingsLeft } = await Service.takePlace({
         email: state.email,
         weekday,
       });
+      commit(ERootMutation.SetBookingsLeft, bookingsLeft);
       commit(ERootMutation.SetQueues, queues);
     } catch (e) {
       console.error("Could not take place", e);
@@ -22,10 +23,11 @@ export const actions: ActionTree<IRootState, any> = {
   },
   async [ERootAction.RemovePlace]({ commit, state }, weekday: EWeekday) {
     try {
-      const queues: IQueue[] = await Service.removePlace({
+      const { queues, bookingsLeft } = await Service.removePlace({
         email: state.email,
         weekday,
       });
+      commit(ERootMutation.SetBookingsLeft, bookingsLeft);
       commit(ERootMutation.SetQueues, queues);
     } catch (e) {
       console.error("Could not remove place", e);
@@ -40,7 +42,7 @@ export const actions: ActionTree<IRootState, any> = {
       commit(ERootMutation.SetLoaded, true);
       commit(ERootMutation.SetLoading, false);
     } catch (e) {
-      console.error(e);
+      console.error("Could not load queues", e);
       commit(ERootMutation.SetLoaded, false);
       commit(ERootMutation.SetLoading, false);
     }
