@@ -22,7 +22,7 @@ io.on("connection", (socket: any) => {
   socket.on(
     "UPDATE_QUEUE",
     (..._args: any[]) => {
-      socket.broadcast("QUEUE_UPDATE");
+      io.emit("QUEUE_UPDATE");
     }
   );
 });
