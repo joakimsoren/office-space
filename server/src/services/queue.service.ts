@@ -34,4 +34,12 @@ export class QueueService {
       email
     );
   }
+
+  async getBookingsLeft(
+    email: string
+  ): Promise<number> {
+    return this.dynamoService.getBookingsLeft(
+      email
+    );
+  }
 }

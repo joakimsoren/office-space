@@ -29,7 +29,14 @@ router.post(
         email
       );
 
-      res.send(queues);
+      const bookingsLeft: number = await service.getBookingsLeft(
+        email
+      );
+
+      res.send({
+        queues,
+        bookingsLeft,
+      });
     } catch (error) {
       res.send({
         error: error.message,
@@ -51,7 +58,14 @@ router.delete(
         email
       );
 
-      res.send(queues);
+      const bookingsLeft: number = await service.getBookingsLeft(
+        email
+      );
+
+      res.send({
+        queues,
+        bookingsLeft,
+      });
     } catch (error) {
       res.send({
         error: error.message,

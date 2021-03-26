@@ -5,6 +5,8 @@ import { Weekday } from "../enums/weekday.enum";
 export class DynamoDBService {
   private readonly tableName: string =
     "queue";
+  private readonly attendeesLimit: number = 5;
+  private readonly attendeesMaxBookings: number = 2;
 
   private readonly client: DynamoDB.DocumentClient;
 
@@ -38,7 +40,7 @@ export class DynamoDBService {
           : [],
         limit: limit
           ? <number>limit
-          : 5,
+          : this.attendeesLimit,
       })
     );
 
@@ -121,11 +123,39 @@ export class DynamoDBService {
   ): Promise<Queue> {
     const queues: Queue[] = await this.getQueues();
 
-    console.log(weekday, queues);
-
     return queues.find(
       (queue: Queue) =>
         queue.weekday === weekday
     );
+  }
+
+  async getBookingsLeft(
+    email: string
+  ): Promise<number> {
+    const bookedQueueAttendees: string[][] = (
+      await this.getQueues()
+    ).map(({ attendees }: Queue) => {
+      if (
+        attendees.length <=
+        this.attendeesLimit
+      )
+        return attendees;
+
+      return attendees.slice(
+        0,
+        this.attendeesLimit
+      );
+    });
+
+    let availableSlots: number = this
+      .attendeesMaxBookings;
+
+    bookedQueueAttendees.forEach(
+      (attendees: string[]) => {
+        if (attendees.includes(email))
+          availableSlots--;
+      }
+    );
+    return availableSlots;
   }
 }
