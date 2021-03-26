@@ -76,6 +76,7 @@ export default class Home extends Vue {
       border-radius: 2px;
       font-size: 20px;
       font-family: "Ranchers", cursive;
+      padding: 10px;
 
       &:focus {
         outline: none;

@@ -1,9 +1,9 @@
 import { Service } from "@/api/service";
-import { IQueue } from "@/types/queue";
 import { EWeekday } from "@/types/weekday";
 import { ActionTree } from "vuex";
 import { ERootAction, ERootMutation } from "./root.constants";
 import { IRootState } from "./root.types";
+import { io } from "socket.io-client";
 
 export const actions: ActionTree<IRootState, any> = {
   [ERootAction.SetEmail]({ commit }, email) {
@@ -17,6 +17,8 @@ export const actions: ActionTree<IRootState, any> = {
       });
       commit(ERootMutation.SetBookingsLeft, bookingsLeft);
       commit(ERootMutation.SetQueues, queues);
+      const socket = io("http://localhost:3000");
+      socket.emit("UPDATE_QUEUE");
     } catch (e) {
       console.error("Could not take place", e);
     }
@@ -29,6 +31,8 @@ export const actions: ActionTree<IRootState, any> = {
       });
       commit(ERootMutation.SetBookingsLeft, bookingsLeft);
       commit(ERootMutation.SetQueues, queues);
+      const socket = io("http://localhost:3000");
+      socket.emit("UPDATE_QUEUE");
     } catch (e) {
       console.error("Could not remove place", e);
     }

@@ -105,7 +105,7 @@ export default class Queue extends Vue {
     border: solid 2px darken(#2e503c, 10%);
     border-radius: 4px 4px 2px 2px;
     .weekday {
-      padding: 5px 10px;
+      padding: 5px 0;
       background-color: #2e503c;
       font-family: "Ranchers", cursive;
       color: white;
@@ -130,6 +130,9 @@ export default class Queue extends Vue {
       list-style: none;
       padding: 5px 2px;
       font-weight: 600;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
       &:not(:last-child) {
         border-bottom: solid 2px darken(#2e503c, 10%);
       }

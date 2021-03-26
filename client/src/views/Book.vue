@@ -71,7 +71,11 @@ export default class Book extends Vue {
   mounted(): void {
     this.actionLoadQueues();
     this.socket.on("connect", () => {
-      console.log("connected", this.socket.connected);
+      console.log("Websocket connected", this.socket.connected);
+    });
+    this.socket.on("QUEUE_UPDATE", () => {
+      console.log("GOT EVENT UPDATE");
+      this.actionLoadQueues();
     });
   }
 }
