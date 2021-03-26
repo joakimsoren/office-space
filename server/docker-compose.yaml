@@ -1,0 +1,15 @@
+version: "3.4"
+
+x-build: &base-build
+  context: .
+  dockerfile: ./Dockerfile
+
+services:
+  server:
+    build: *base-build
+    ports:
+      - 3000:3000
+      - 3001:3001
+    volumes:
+      - ./src/:/app/src
+    command: npm run start
