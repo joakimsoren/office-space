@@ -158,4 +158,113 @@ export class DynamoDBService {
     );
     return availableSlots;
   }
+
+  async removeGreedyAttendees() {
+    const queues: Queue[] = await this.getQueues();
+    const potentialGreedyAttendees: string[] = this.getPotentialGreedyAttendees(
+      queues
+    );
+
+    await this.removePotentialGreedyAttendeesFromWaitningList(
+      potentialGreedyAttendees,
+      queues
+    );
+  }
+
+  private getPotentialGreedyAttendees(
+    queues: Queue[]
+  ): string[] {
+    const bookedAttendees: string[] = queues
+      .map(({ attendees }: Queue) => {
+        if (
+          attendees.length <=
+          this.attendeesLimit
+        )
+          return attendees;
+
+        return attendees.slice(
+          0,
+          this.attendeesLimit
+        );
+      })
+      .reduce(
+        (
+          acc: string[],
+          curr: string[]
+        ) => {
+          return [...acc, ...curr];
+        },
+        []
+      );
+
+    return bookedAttendees.filter(
+      (attendee: string) => {
+        return (
+          this.arrayContainsAmount(
+            bookedAttendees,
+            attendee
+          ) >= 2
+        );
+      }
+    );
+  }
+
+  private arrayContainsAmount(
+    array: string[],
+    value: string
+  ): number {
+    let count: number = 0;
+
+    array.forEach((entry: string) => {
+      if (entry === value) count++;
+    });
+
+    return count;
+  }
+
+  private async removePotentialGreedyAttendeesFromWaitningList(
+    potentialGreedyAttendees: string[],
+    queues: Queue[]
+  ): Promise<void> {
+    await Promise.all(
+      queues.map(
+        async (queue: Queue) => {
+          let bookedAttendees: string[] = [];
+          let waitningAttendees: string[] = [];
+
+          if (
+            queue.attendees.length <=
+            this.attendeesLimit
+          ) {
+            bookedAttendees =
+              queue.attendees;
+          } else {
+            bookedAttendees = queue.attendees.slice(
+              0,
+              this.attendeesLimit
+            );
+            waitningAttendees = queue.attendees.slice(
+              this.attendeesLimit,
+              queue.attendees.length
+            );
+          }
+
+          waitningAttendees = waitningAttendees.filter(
+            (attendee: string) =>
+              !potentialGreedyAttendees.includes(
+                attendee
+              )
+          );
+
+          await this.updateQueue(
+            queue.weekday,
+            [
+              ...bookedAttendees,
+              ...waitningAttendees,
+            ]
+          );
+        }
+      )
+    );
+  }
 }

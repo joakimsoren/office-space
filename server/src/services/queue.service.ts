@@ -42,4 +42,8 @@ export class QueueService {
       email
     );
   }
+
+  async removeGreedyAttendees(): Promise<void> {
+    return this.dynamoService.removeGreedyAttendees();
+  }
 }

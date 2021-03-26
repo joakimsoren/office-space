@@ -42,6 +42,8 @@ router.post(
         email
       );
 
+      await service.removeGreedyAttendees();
+
       const bookingsLeft: number = await service.getBookingsLeft(
         email
       );
@@ -70,6 +72,8 @@ router.delete(
         weekday,
         email
       );
+
+      await service.removeGreedyAttendees();
 
       const bookingsLeft: number = await service.getBookingsLeft(
         email
