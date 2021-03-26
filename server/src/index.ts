@@ -20,9 +20,9 @@ io.on("connection", (socket: any) => {
   console.log("a user connected");
 
   socket.on(
-    "TEST",
-    (...args: any[]) => {
-      console.log(args);
+    "UPDATE_QUEUE",
+    (..._args: any[]) => {
+      socket.broadcast("QUEUE_UPDATE");
     }
   );
 });
