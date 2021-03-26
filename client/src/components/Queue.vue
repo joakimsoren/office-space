@@ -15,15 +15,18 @@
         <li
           v-for="(attendee, index) of acceptedAttendees"
           :key="`a-${index}`"
-          :class="['occupied-spots', { waiting: canShowWaiting }]"
+          :class="[
+            { 'occupied-spots': !!attendee },
+            { waiting: canShowWaiting },
+          ]"
         >
-          {{ attendee }}
+          <transition name="appear" mode="out-in">
+            <span key="1" v-if="attendee">
+              {{ attendee }}
+            </span>
+            <span key="2" v-else> Available </span>
+          </transition>
         </li>
-        <template v-if="openSpots > 0">
-          <li v-for="index in openSpots" :key="`o-${index}`" class="open-slots">
-            Available
-          </li>
-        </template>
       </ul>
     </div>
     <div class="divider">-</div>
@@ -73,7 +76,18 @@ export default class Queue extends Vue {
       return this.waitingList;
     }
     const accepted: string[] = [...this.attendees];
-    return accepted.slice(0, this.queue.limit);
+    if (accepted.length >= this.queue.limit) {
+      return accepted.slice(0, this.queue.limit);
+    }
+    const increasedList: string[] = [];
+    for (let i = 0; i < this.queue.limit; i++) {
+      if (accepted[i]) {
+        increasedList.push(accepted[i]);
+      } else {
+        increasedList.push("");
+      }
+    }
+    return increasedList;
   }
 
   get openSpots(): number {
@@ -112,6 +126,7 @@ export default class Queue extends Vue {
       font-size: 30px;
       border-bottom: solid 2px darken(#2e503c, 10%);
       position: relative;
+      overflow: hidden;
       .wait-count {
         cursor: pointer;
         font-size: 15px;
@@ -133,6 +148,7 @@ export default class Queue extends Vue {
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
+      transition: color 0.1s ease-in;
       &:not(:last-child) {
         border-bottom: solid 2px darken(#2e503c, 10%);
       }
@@ -146,6 +162,18 @@ export default class Queue extends Vue {
   }
   .divider {
     font-weight: bolder;
+  }
+  .appear-enter-to,
+  .appear-leave {
+    opacity: 1;
+  }
+  .appear-leave-active,
+  .appear-enter-active {
+    transition: opacity 0.1s ease-in-out;
+  }
+  .appear-leave-to,
+  .appear-enter {
+    opacity: 0;
   }
 }
 </style>

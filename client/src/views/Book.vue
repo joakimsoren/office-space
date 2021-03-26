@@ -47,6 +47,7 @@ export default class Book extends Vue {
 
   @Action(ERootAction.SetEmail) actionSetEmail: any;
   @Action(ERootAction.LoadQueues) actionLoadQueues: any;
+  @Action(ERootAction.UpdateQueues) actionUpdateQueues: any;
 
   socket: Socket<DefaultEventsMap, DefaultEventsMap> = io(
     "http://localhost:3000"
@@ -74,8 +75,7 @@ export default class Book extends Vue {
       console.log("Websocket connected", this.socket.connected);
     });
     this.socket.on("QUEUE_UPDATE", () => {
-      console.log("GOT EVENT UPDATE");
-      this.actionLoadQueues();
+      this.actionUpdateQueues();
     });
   }
 }

@@ -14,6 +14,7 @@ export enum ERootAction {
   TakePlace = "takePlace",
   RemovePlace = "removePlace",
   Logout = "logout",
+  UpdateQueues = "updateQueues",
 }
 
 export enum ERootMutation {

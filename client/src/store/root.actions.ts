@@ -52,4 +52,13 @@ export const actions: ActionTree<IRootState, any> = {
       commit(ERootMutation.SetLoading, false);
     }
   },
+  async [ERootAction.UpdateQueues]({ commit, state }) {
+    try {
+      const { queues, bookingsLeft } = await Service.fetchQueues(state.email);
+      commit(ERootMutation.SetBookingsLeft, bookingsLeft);
+      commit(ERootMutation.SetQueues, queues);
+    } catch (e) {
+      console.error("Could not update queues", e);
+    }
+  },
 };
