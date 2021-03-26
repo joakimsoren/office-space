@@ -89,7 +89,10 @@ export default class Book extends Vue {
   .book {
     display: grid;
     grid-template-columns: repeat(5, 20%);
-    grid-template-rows: 1;
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(3, 33%);
+    }
   }
 }
 button {
