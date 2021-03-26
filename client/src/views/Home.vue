@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <div class="jumbo">Office Space</div>
+    <div class="jumbo-container">
+      <div class="jumbo">Office Space</div>
+    </div>
     <div class="input-email-container">
       <label for="input-email">Enter your email</label>
       <br />
@@ -45,14 +47,58 @@ export default class Home extends Vue {
 @import url("https://fonts.googleapis.com/css2?family=Ranchers&family=Zilla+Slab:wght@300&display=swap");
 .home {
   height: 100%;
-  .jumbo {
-    width: 100%;
-    font-size: 20px;
-    color: white;
-    background-color: blue;
-    height: 30%;
-    font-family: "Ranchers", cursive;
-    font-family: "Zilla Slab", serif;
+  .jumbo-container {
+    padding: 5px;
+    .jumbo {
+      font-size: 20px;
+      color: white;
+      background-color: #2e503c;
+      height: 30%;
+      font-family: "Ranchers", cursive;
+      font-size: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-shadow: 10px 10px #000000;
+      border-radius: 6px;
+      box-shadow: 0px 5px 10px 0px #727272;
+      border: solid 5px black;
+      padding: 40px 0;
+    }
+  }
+  .input-email-container {
+    margin-top: 10%;
+    label {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    #input-email {
+      margin: 20px;
+      width: 50%;
+      border: solid 2px #2e503c;
+      border-radius: 2px;
+      font-size: 20px;
+      font-family: "Ranchers", cursive;
+
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      border-radius: 2px;
+      background-color: #2e503c;
+      font-family: "Zilla Slab", serif;
+      color: white;
+      font-weight: bold;
+      font-size: 30px;
+      cursor: pointer;
+      &:hover {
+        background-color: lighten(#2e503c, 10%);
+      }
+      &:active {
+        background-color: darken(#2e503c, 5%);
+      }
+    }
   }
 }
 </style>

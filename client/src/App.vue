@@ -10,6 +10,8 @@ html {
 }
 body {
   height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 #app {
@@ -32,6 +34,23 @@ body {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+
+button {
+  border: solid 2px darken(#2e503c, 10%);
+  border-radius: 2px;
+  background-color: #2e503c;
+  font-family: "Zilla Slab", serif;
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  cursor: pointer;
+  &:hover {
+    background-color: lighten(#2e503c, 10%);
+  }
+  &:active {
+    background-color: darken(#2e503c, 5%);
   }
 }
 </style>
