@@ -116,6 +116,7 @@ export default class Queue extends Vue {
     display: flex;
     flex-direction: column;
     margin: 5px;
+    margin-top: 15px;
     border: solid 2px darken(#2e503c, 10%);
     border-radius: 4px 4px 2px 2px;
     .weekday {
