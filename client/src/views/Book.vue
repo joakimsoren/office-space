@@ -32,6 +32,8 @@ import { Component, Vue } from "vue-property-decorator";
 import Queue from "@/components/Queue.vue";
 import { Action, State } from "vuex-class";
 import { ERootAction } from "@/store/root.constants";
+import { io, Socket } from "socket.io-client";
+import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 
 @Component({
   components: { Queue },
@@ -45,6 +47,10 @@ export default class Book extends Vue {
 
   @Action(ERootAction.SetEmail) actionSetEmail: any;
   @Action(ERootAction.LoadQueues) actionLoadQueues: any;
+
+  socket: Socket<DefaultEventsMap, DefaultEventsMap> = io(
+    "http://localhost:3000"
+  );
 
   get empty(): boolean {
     return this.loaded && !this.queues.length;
@@ -64,6 +70,9 @@ export default class Book extends Vue {
 
   mounted(): void {
     this.actionLoadQueues();
+    this.socket.on("connect", () => {
+      console.log("connected", this.socket.connected);
+    });
   }
 }
 </script>
