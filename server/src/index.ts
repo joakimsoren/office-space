@@ -16,8 +16,15 @@ const io = require("socket.io")(http, {
   },
 });
 
-io.on("connection", (_socket: any) => {
+io.on("connection", (socket: any) => {
   console.log("a user connected");
+
+  socket.on(
+    "TEST",
+    (...args: any[]) => {
+      console.log(args);
+    }
+  );
 });
 
 app.use(cors());
