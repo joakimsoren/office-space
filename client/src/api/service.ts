@@ -7,7 +7,7 @@ export class Service {
   static fetchQueues(
     email: string
   ): Promise<{ queues: IQueue[]; bookingsLeft: number }> {
-    return fetch(`${Service.path}queues?email${email}`)
+    return fetch(`${Service.path}queues?email=${email}`)
       .then((response) => response.json())
       .then(
         (responseJSON) =>
