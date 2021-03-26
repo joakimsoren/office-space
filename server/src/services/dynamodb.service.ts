@@ -44,7 +44,62 @@ export class DynamoDBService {
       })
     );
 
-    return queues;
+    return this.sortQueues(queues);
+  }
+
+  private sortQueues(
+    queues: Queue[]
+  ): Queue[] {
+    return queues.sort(
+      (queueA: Queue, queueB: Queue) =>
+        this.compareQueues(
+          queueA,
+          queueB
+        )
+    );
+  }
+
+  private compareQueues(
+    queueA: Queue,
+    queueB: Queue
+  ): number {
+    if (
+      this.getQueueValue(queueA) <
+      this.getQueueValue(queueB)
+    )
+      return -1;
+    if (
+      this.getQueueValue(queueA) ===
+      this.getQueueValue(queueB)
+    )
+      return 0;
+
+    if (
+      this.getQueueValue(queueA) >
+      this.getQueueValue(queueB)
+    )
+      return 1;
+  }
+
+  private getQueueValue(
+    queue: Queue
+  ): number {
+    switch (queue.weekday) {
+      case Weekday.Monday:
+        return 0;
+      case Weekday.Tuesday:
+        return 1;
+      case Weekday.Wednesday:
+        return 2;
+      case Weekday.Thursday:
+        return 3;
+      case Weekday.Friday:
+        return 4;
+      case Weekday.Saturday:
+        return 5;
+      case Weekday.Sunday:
+        return 6;
+    }
   }
 
   async addToQueue(
