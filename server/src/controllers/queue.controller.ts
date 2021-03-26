@@ -11,8 +11,21 @@ const service: QueueService = new QueueService();
 router.get(
   "/",
   async (req: any, res: any) => {
-    const queues: Queue[] = await service.getAllQueues();
-    res.send(queues);
+    const { email } = req.query;
+    try {
+      const queues: Queue[] = await service.getAllQueues();
+      const bookingsLeft: number = await service.getBookingsLeft(
+        email
+      );
+      res.send({
+        queues,
+        bookingsLeft,
+      });
+    } catch (error) {
+      res.send({
+        error: error.message,
+      });
+    }
   }
 );
 
